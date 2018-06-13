@@ -16,12 +16,12 @@ def crop_video(path, x_start, y_start, x_end, y_end):
         if sucess == False:
             break
     
-        print("(%d:%d), (%d:%d)" % (y_start, y_end, x_start, x_end))
+        #print("(%d:%d), (%d:%d)" % (y_start, y_end, x_start, x_end))
         crop = frame[y_start:y_end, x_start: x_end]
         cv2.imshow('frame2', crop)
-        k = cv2.waitKey(30) & 0xff
-        if k == 27:
-            break
+        #k = cv2.waitKey(30) & 0xff
+        #if k == 27:
+        #    break
         out.write(crop)
 
     cap.release()
