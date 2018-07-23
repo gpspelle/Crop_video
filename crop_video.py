@@ -5,10 +5,10 @@ import sys
 
 def crop_video(path, x_start, y_start, x_end, y_end):
     fps = int(round((cv2.VideoCapture(path)).get(cv2.CAP_PROP_FPS)))
-    os.rename(path, 'old_res_' + path)
+    os.rename(path, path[:-4] + '_old_' + '.mp4')
     out = cv2.VideoWriter(path, cv2.VideoWriter_fourcc('M','J','P','G'), fps, (x_end-x_start, y_end-y_start))
 
-    path = 'old_res_' + path
+    path = path[:-4] + '_old_' + '.mp4'
     cap = cv2.VideoCapture(path)
 
     while cap.isOpened():
@@ -16,16 +16,13 @@ def crop_video(path, x_start, y_start, x_end, y_end):
         if sucess == False:
             break
     
-        #print("(%d:%d), (%d:%d)" % (y_start, y_end, x_start, x_end))
         crop = frame[y_start:y_end, x_start: x_end]
         cv2.imshow('frame2', crop)
-        #k = cv2.waitKey(30) & 0xff
-        #if k == 27:
-        #    break
         out.write(crop)
 
     cap.release()
     out.release()
+    os.rename(path, 'trash.mp4')
     cv2.destroyAllWindows()
 
 argp = argparse.ArgumentParser(description='Crop a video')
